@@ -1,0 +1,28 @@
+from setuptools import setup, find_packages
+
+setup(name='restosaur-jura',
+      version='0.1',
+      description='JSON stdlib for Restosaur based REST APIs',
+      classifiers=[
+        "Development Status :: 5 - Alpha",
+        "Environment :: Web Environment",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Intended Audience :: Developers",
+        ],
+      author='Marcin Nowak',
+      author_email='marcin.j.nowak@gmail.com',
+      url='https://github.com/restosaur/jura',
+      install_requires=['restosaur'],
+      keywords='web rest python',
+      packages=find_packages('.'),
+      include_package_data=True,
+      test_suite='nose.collector',
+      zip_safe=True,
+      )
