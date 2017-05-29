@@ -97,6 +97,16 @@ class Error(object):
                 }
 
 
+class Mapping(object):
+    def __init__(self, **kwargs):
+        self.mapping = kwargs
+
+    def as_dict(self, ctx):
+        return dict([
+            (key, ctx.transform_representation(value))
+            for key, value in self.mapping.items()])
+
+
 def compose(*items):
     return Composition(*items)
 
@@ -115,4 +125,5 @@ def register(api):
     register_representation(api, Links)
     register_representation(api, Composition)
     register_representation(api, Collection)
+    register_representation(api, Mapping)
     register_representation(api, geo.Location)

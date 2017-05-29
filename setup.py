@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='restosaur-jura',
-      version='0.1',
+      version='0.1-dev',
       description='JSON stdlib for Restosaur based REST APIs',
       classifiers=[
         "Development Status :: 5 - Alpha",
