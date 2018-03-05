@@ -1,7 +1,7 @@
 class Link(object):
     def __init__(
             self, url, method='get', rel=None, name=None,
-            access=None, access_func=None,
+            access=None, access_func=None, mimetypes=None,
             headers=None):
         self.url = url
         self.rel = rel
@@ -10,6 +10,7 @@ class Link(object):
         self.access = access
         self.access_func = access_func
         self.headers = headers or {}
+        self.mimetypes = mimetypes
         if self.access_func and self.access is not None:
             raise ValueError(
                 'You should provide only `access` or `access_func`. Both set.')
@@ -26,6 +27,8 @@ class Link(object):
             data.update({'access': access})
         if self.headers:
             data['headers'] = self.headers
+        if self.mimetypes:
+            data['mimetypes'] = self.mimetypes
         return data
 
 
@@ -34,9 +37,22 @@ class LinkAlreadyRegistered(Exception):
 
 
 class Links(object):
-    def __init__(self, links=None, key='links'):
+    def __init__(self, links=None, key='links', as_list=False):
         self.links = links or []
         self.key = key
+
+        if self.as_list:
+            def links_factory(ctx):
+                return list(map(
+                    lambda x: self.link_to_dict(x, ctx),
+                    self.links))
+        else:
+            def links_factory(ctx):
+                return dict(map(
+                    lambda x: (x.rel, self.link_to_dict(x, ctx)),
+                    self.links))
+
+        self._links_factory = links_factory
 
     def add(self, link_object):
         self.links.append(link_object)
@@ -49,9 +65,7 @@ class Links(object):
 
     def as_dict(self, ctx):
         return {
-                self.key: map(
-                    lambda x: self.link_to_dict(x, ctx),
-                    self.links),
+                self.key: self._links_factory(ctx)
                 }
 
 
