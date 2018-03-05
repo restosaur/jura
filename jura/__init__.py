@@ -41,7 +41,7 @@ class Links(object):
         self.links = links or []
         self.key = key
 
-        if self.as_list:
+        if as_list:
             def links_factory(ctx):
                 return list(map(
                     lambda x: self.link_to_dict(x, ctx),
